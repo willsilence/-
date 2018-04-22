@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<%include includes/head.ejs %>
+            <link rel="stylesheet" href="assets/css/c1.css">
+            <link rel="stylesheet" href="assets/css/c2.css">
+            <link rel="stylesheet" href="assets/css/c3.css">
+</head>
+<body>
+
+<div class="wrapper">
+    <%include includes/mainnav.ejs %>
+    <div class="main-panel">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle"> 
+
+                        <span class="icon-bar bar1"></span>
+                        <span class="icon-bar bar2"></span>
+                        <span class="icon-bar bar3"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">首页</a>
+                </div>  
+            </div>
+        </nav>
+<div class="content">
+        <div class="container-fluid">
+               
+               <!--  <a class="fileaddbtn" id="fileaddbtn" href="javascript:void();">+</a>
+                <a class="fileaddbtn" id="fileaddbtn" href="javascript:void();">+</a>
+                <a class="fileaddbtn" id="fileaddbtn" href="javascript:void();">+</a>
+                <a class="fileaddbtn" id="fileaddbtn" href="javascript:void();">+</a>
+                <input type="file" name="files" id="fileupload" style="display:none"> -->
+                       <!--  <script>
+                        $('#fileupload').fileupload({
+                                url : "/uploadpic",
+                                dataType : 'json',
+                                done: function(e , data){
+                                        $(".fileaddbtn").css({
+                                                "background" : "url(uploads/small/" + data.result.picname + ")"
+                                        })
+                                }
+                        })
+                        // 模拟触发
+                        $("#fileaddbtn").on("click" , function(){
+                                $("#fileupload").trigger("click");
+                        });
+                        </script> -->
+                        <!-- 使用面向对象的方法写组件 -->
+                        <div class="row">
+                                <div class="card">
+                                        <div class="content">
+                                              <% if(login){ %>
+                                                    <p>想要提问什么?</p>
+                                                    <textarea  id="contenttextarea"   class="form-control"></textarea>
+                                                    <button class="btn btn-success" id="submitbtn">提交</button>
+                                                    <div class="picaddbox" id="picaddbox">
+                                                    
+                                                     </div>
+                                               <% }%>
+                                        </div>
+                                </div>
+                               <div class="card">
+                                <div id="qsbox">
+                                                        <script type="text/javascript" src="/assets/js/logic/PicBox.js"></script>
+                                                        <script type="text/javascript" src="/assets/js/logic/CommentItem.js"></script>
+                                                        <script type="text/javascript" src="/assets/js/logic/PageNavigator.js"></script>
+                                                        <script type="text/javascript" src="/assets/js/logic/CommentBox.js"></script>
+                                                        <script type="text/javascript">
+                                                            new CommentBox();
+                                                        </script>
+                                                </div>
+                                </div>
+                        </div>
+            
+         </div>
+ </div>
+
+    </div>
+</div>
+
+
+</body>
+<script type="text/javascript" src="/assets/js/jquery.ui.widget.js"></script>
+<script type="text/javascript" src="/assets/js/jquery-file-upload.js"></script>
+<script type="text/javascript" src="/assets/js/jquery-ui.min.js"></script>
+<script type="text/javascript" src="/assets/js/addpic.js"></script>
+<script type="text/javascript">
+     var  apm  =  new AddPicManager({
+            "boxid" : "#picaddbox"
+        });
+        $("#submitbtn").click(function(){
+                    $.post("/q" , {
+                        "content" : $("#contenttextarea").val() , 
+                        // 也可以 tranditional: true ， 
+                        "picnames" : JSON.stringify(apm.picnames)
+        },function(data){
+                window.location.reload();
+        });
+    });
+</script>
+  <%include includes/jslink.ejs %>
+</html>
+ 

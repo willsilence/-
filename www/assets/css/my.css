@@ -1,0 +1,129 @@
+@font-face {
+  font-family: 'iconfont';
+  src: url('/assets/fonts/iconfont.eot');
+  src: url('/assets/fonts/iconfont.eot?#iefix') format('embedded-opentype'),
+  url('/assets/fonts/iconfont.woff') format('woff'),
+  url('/assets/fonts/iconfont.ttf') format('truetype'),
+  url('/assets/fonts/iconfont.svg#iconfont') format('svg');
+}
+
+.iconfont{
+  font-family:"iconfont" !important;
+  font-size:16px;font-style:normal;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-stroke-width: 0.2px;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.sidebar .logo .simple-text{
+       font-size: 24px;
+       font-weight: bold;
+}
+.bottom_box{
+      position:absolute;
+      bottom:0;
+      font-weight: 700;
+      width:100%;
+}
+
+.modal-footer {   border-top: 0px; }
+
+.content form input{
+      background: #eee;
+}
+
+.content  .modal-dialog{
+      margin-left:12%;
+      padding-bottom: 5%;
+} 
+.content .modal-dialog .form-group .btn{
+    letter-spacing: 1rem;
+}
+.content .modal-dialog .form-group #need_help{
+        display: block;
+        margin-top: 10px;
+}
+.content #tip_success{
+        padding: 5px 0px  5px 20px;
+        margin-bottom: 0px;
+        display: none;
+}
+.content #tip_warning{
+       padding: 5px 0px  5px 20px;
+        margin-bottom: 0px;
+        display:none;
+}
+
+#avatarbox{
+      text-align: center;
+} 
+#avatarbox img{
+       height:120px;
+       width:120px;
+} 
+
+#nicknamebox{
+        text-align: center;
+}
+#toolbox {
+  text-align: center;
+}
+ 
+#submitbtn{
+    margin-top:10px; 
+}
+
+@media(min-width:768px){
+        .modal-dialog{
+              width:800px;
+         }
+}
+
+.addbtnsbox{
+  float:left;
+  margin:20px 0;
+  margin-right:10px;
+  position: relative;
+}
+
+.fileaddbtn{
+    display:block;
+    width:86px;
+    height: 86px;
+    background-color: #aaa;
+    color:white;
+    font-size:86px;
+    line-height: 86px;
+    text-align: center;
+}
+
+.fileaddbtn:hover,.fileaddbtn:focus{
+    background-color: gold;
+    color:white;
+}
+.fileremovebtn{
+  position: absolute;
+  right:0;
+  top: 0;
+  width:16px;
+  height:16px;
+  background-color: rgb(0,0,0);
+  text-align: center;
+  line-height: 16px;
+  color:white;
+  display: none;
+}
+.fileremovebtn:hover{
+    color:white;
+    background-color: rgba(0,0,0,.5);
+}
+.card{
+  overflow:hidden;
+}
+#submitbtn{
+    float:right;
+    display:block;
+}
+#content{
+  overflow:hidden;
+}

@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<%include includes/head.ejs %>
+</head>
+<body>
+
+<div class="wrapper">
+    <%include includes/mainnav.ejs %>
+    <div class="main-panel">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle"> 
+
+                        <span class="icon-bar bar1"></span>
+                        <span class="icon-bar bar2"></span>
+                        <span class="icon-bar bar3"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">个人资料修改页面</a>
+                </div>
+                 
+            </div>
+        </nav>
+
+
+<div class="content">
+        <div class="container-fluid">
+                <div class="row">
+                   	<div class="col-lg-6">
+                    		<div class="card">
+                    			<div class="content" id="profile_change">
+                    				<p>email: 
+					 <input type="text" disabled value="<%=email%>" class="form-control" /></p>
+                    				 <p>昵称: 
+					 <input type="text"   value="" class="form-control" id="nicknameinput"/></p>
+					  <p>个人简介:
+					  <!-- <input type="text"  value="" class="form-control"></p> -->
+					  <textarea  class="form-control" rows="3" id="signatureinput"></textarea>
+				 	 <button type="submit" class="btn btn-primary" id="submitbtn">提交</button>  
+                    			</div>
+                    		</div>
+              	</div>
+                </div>
+                
+         </div>
+ </div>
+    </div>
+</div>
+
+
+</body>
+  <%include includes/jslink.ejs %>
+  <script type="text/javascript">
+  	// 拉取数据
+  	$.get("/user/<%=email%>" , function(data){
+  		// console.log(data );
+  		if(!data.nickname) data.nickname = "无名用户";
+  		if(!data.signature)  data.signature = "这家伙很懒,什么都没留下";
+
+  		$("#nicknameinput").val(data.nickname);
+  		$("#signatureinput").val(data.signature);	
+  	})
+  	// 提交数据
+   	$("#submitbtn").on("click" , function(data){
+   		$.post("/user/<%=email%>" , {
+   			nickname : $("#nicknameinput").val(),
+   			signature : $("#signatureinput").val() 
+   		},function(data){
+              if(data.result == 1){
+                    window.location =  "/";
+              }else {
+                  alert("服务器错误");
+              }
+      })
+   	})
+  </script>
+</html>

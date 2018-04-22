@@ -1,0 +1,75 @@
+ <div class="sidebar" data-background-color="black" data-active-color="info">
+    <!-- data-background-color="white | black"
+            data-active-color="primary | info | success | warning | danger"
+-->
+
+        <div class="sidebar-wrapper">
+            <div class="logo">
+                <a href="http://www.creative-tim.com" class="simple-text">
+                    知乎----问答平台
+                </a>
+            </div>
+       <ul class="nav">
+            <li <%if(locate == "index"){%>class="active"<%}%>><a href="/"><i class="iconfont">&#xf014b;</i> <p>首页</p></a></li>
+       </ul>
+<!-- 底部栏  登录注册-->
+    <div class="bottom_box">
+             <%
+                    if(!login){
+            %>
+                <ul class="nav">
+                    <li <% if(locate == 'login'){ %> class="active" <% } %>>
+                        <a href="/login">
+                            <i class="iconfont">&#xe615;</i>
+                            <p>登录</p>
+                        </a>
+                    </li>
+                    <li <% if(locate == 'regist'){ %> class="active" <% } %>>
+                        <a href="/regist">
+                            <i class="iconfont">&#xe676;</i>
+                            <p>注册</p>
+                        </a>
+                    </li>
+                </ul>
+             <%
+                }else{
+            %>
+                 <p id="avatarbox"></p>
+                 <p id="nicknamebox"></p>
+                 <p id="toolbox">
+                        <a href="/logout">[退出登录]</a>
+                        <a href="/profile">[更改资料]</a>
+                        <a data-toggle="modal" data-target="#myModal" style="cursor:pointer">[更改头像]</a>
+                 </p>
+                 <script type="text/javascript">
+                        $.get("/user/<%=email%>" , function(data){
+                            if(!data.avatar) data.avatar = "/assets/img/avatar.jpg";
+                            if(!data.nickname) data.nickname = "无名用户";
+                            $("#avatarbox").append("<img src='avatars/"+data.avatar +"'>");
+                            $("#nicknamebox").append("<b>"+data.nickname+"</b>");
+                        })
+                 </script>
+            <%
+                }
+            %>
+        </div>
+    </div>
+</div>
+
+<!-- 模态框更改头像 -->
+            <div class="modal fade" tabindex="-1" role="dialog" id="myModal">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">更改头像</h4>
+                </div>
+                <div class="modal-body">
+                         <iframe src="/change_avatar_step1" width="800" height="600" style="border:none;">
+                                    
+                         </iframe>
+                </div>
+                 
+            </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->

@@ -1,0 +1,28 @@
+.pagenavigator ul{
+	list-style: none;
+}
+.pagenavigator ul li{
+	float: left;
+	margin-right: 6px;
+}
+.pagenavigator ul li a{
+	display: block;
+	width: 50px;
+	height: 26px;
+	background: -webkit-linear-gradient(top , rgba(189, 189, 189, 0.48) ,rgba(224, 224, 224, 0.68), rgba(238, 238, 238, 0.85));
+	border-radius: 4px;
+	box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.44);
+	text-align: center;
+	line-height: 26px;
+	text-decoration: none;
+	color: #333;
+	font-size: 18px;
+	font-family: consolas;
+}
+.pagenavigator ul li.cur a{
+	background: -webkit-linear-gradient(top , #FF5722 , #F4511E);
+	color:white;
+}
+.pagenavigator ul li.ellipsis{
+	color:darkred;
+}

@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>图片裁剪</title>
+	<link rel="stylesheet" href="/assets/css/jquery-ui.min.css">
+	<style>
+	*{
+		margin: 0px;
+		padding:0px;
+	}
+	.cut_box{
+		position:relative;
+		width:750px;
+	}
+	.big_img_box{
+		border: 1px solid #333;
+		position:relative;
+	}
+	.mask{
+		position:absolute;
+		width:100%;
+		height:100%;
+		background: rgba(0,0,0,0.7);
+		z-index: 999;
+	}
+	.cut{
+		position:absolute;
+		top:0;
+		left:0;
+		width:100px;
+		height:100px;
+		z-index: 1000;
+		background: url(/uploads/<%=picname%>);
+		cursor:move;
+		overflow: hidden;
+	}
+/*使用盒子模拟裁剪线的运动轨迹*/
+	.cut .t{
+		border-top:2px dashed orange;
+		height:0;
+		width:1500px;
+		position:absolute;
+		top:0;
+		left:0;
+		animation: move_l 10s linear 0s infinite;
+	}
+	@-webkit-keyframes move_l{
+		from{
+			left:0;
+		}
+		to{
+			left:-750px;
+		}
+	}
+	.cut .r{
+		border-right:2px dashed orange;
+		height:1500px;
+		width:0px;
+		position:absolute;
+		top:0;
+		right:0;
+		animation: move_t 10s linear 0s infinite;
+	}
+	@-webkit-keyframes move_t{
+		from{
+			top:0;
+		}
+		to{
+			top:-750px;
+		}
+	}
+	.cut .b{
+		border-bottom:2px dashed orange;
+		height:0px;
+		width:1500px;
+		position:absolute;
+		right:0;
+		bottom:0;
+		animation: move_r 10s linear 0s infinite;
+	}
+	@-webkit-keyframes move_r{
+		from{
+			right:0;
+		}
+		to{
+			right:-750px;
+		}
+	}
+	.cut .l{
+		border-left:2px dashed orange;
+		height:1500px;
+		width: 0px;
+		position:absolute;
+		left:0;
+		bottom:0;
+		animation: move_b 10s linear 0s infinite;
+	}
+	@-webkit-keyframes move_b{
+		from{
+			bottom:0;
+		}
+		to{
+			bottom:-750px;
+		}
+	}
+	 
+
+	.preview_img_box{
+		position:absolute;
+		top: 0px;
+		right: 0px;
+	}
+	.preview_img_box .big{
+		width:120px;
+		height:120px;
+		border: 1px solid #eee;
+		margin-bottom: 20px;
+		background: url(/uploads/<%=picname%>) no-repeat;
+	}
+	.preview_img_box .mid{
+		width:80px;
+		height:80px;
+		border: 1px solid #eee;
+		margin-bottom: 20px;
+		background: url(/uploads/<%=picname%>) no-repeat;
+	}
+	.preview_img_box .sml{
+		width:40px;
+		height:40px;
+		border: 1px solid #eee;
+		margin-bottom: 20px;
+		background: url(/uploads/<%=picname%>) no-repeat;
+	}
+	.btngo{
+		width:120px;
+		height:40px;
+		background-color:orange;
+		border: none;
+		cursor:pointer;
+		margin-top: 10px;
+	</style>
+</head>
+<body>
+	<div class="cut_box">
+		<div class="big_img_box">
+			<p class="cut">
+				<b class="t"></b>
+				<b class="r"></b>
+				<b class="b"></b>
+				<b class="l"></b>
+			</p>
+			<div class="mask"></div>
+		</div>
+		<div class="preview_img_box">
+			<p class="big" data-w="120" data-h="120"></p>
+			<p class="mid" data-w="80" data-h="80"></p>
+			<p class="sml" data-w="40" data-h="40"></p>
+		</div>
+	</div>
+	 <button class="btngo">裁切！</button>
+</body>
+</html>
+<script type="text/javascript" src="/assets/js/jquery.min.js"></script>
+<script type="text/javascript" src="/assets/js/jquery-ui.min.js"></script>
+<script type="text/javascript">
+	(function(){
+		var image = new Image();
+		image.src =  "/uploads/<%=picname%>";
+		// 全局x= 0 ,  y = 0 , w = 100 , h =100;
+		var  x =  0, y = 0 , w = 100 ,h =100;
+		// 图片的宽高
+		var pic_w ,pic_h;
+		// 原来的宽高
+		var origin_w ,origin_h;
+
+		image.onload = function(){
+			$(".big_img_box").append($(image));
+			//得到图片原来的宽度和高度 上树后才有宽高
+			origin_w = $(image).width();
+			origin_h = $(image).height();
+			// alert(origin_w);
+			// alert(origin_h);
+			$(image).css({
+				"max-width" : 600,
+				"max-height" : 400 
+			});
+			pic_w = $(image).width(); 
+			pic_h = $(image).height(); 
+
+			$(".big_img_box").css({
+				"width" : pic_w,
+				"height" : pic_h
+			});
+			// 图片的宽和高限制背景图片的尺寸
+			$(".cut").css({
+				"background-size" : pic_w + "px " + pic_h + "px"
+			});
+			// 实现拖拽 查看JQUI的API
+			$(".cut").draggable({
+					"containment" : "parent" ,
+					"drag" : function(event , ui){
+						// 鼠标的x ,y 轴距离
+						x = ui.position.left;
+						y = ui.position.top;
+						// console.log(x , y);
+
+						$(this).css({
+							"background-position" : -x + "px " + -y + "px"
+						});
+						setPreviews();
+					}
+				});
+			// 实现更改尺寸
+			$(".cut").resizable({
+					//约数比例：
+					aspectRatio: 1 / 1 ,
+					//限制区域：
+					containment: "parent" ,
+					resize : function(event , ui){
+						w = ui.size.width;
+						h = ui.size.height;
+				 		setPreviews();
+					}
+				});
+	 		setPreviews();
+		}
+		// onload结束
+
+		// 调用位置：更改尺寸/ 拖拽/
+		// 如何让右侧小盒子显示与左侧cut区域一致
+		function setPreviews(){
+			// 遍历其中的每个p
+			$(".preview_img_box p").each(function(){
+				// 获取右侧盒子的实际宽和高
+				var _w = $(this).data("w");
+				var _h = $(this).data("h");
+			
+				// 计算比例系数  (pic_w / w) * _w  得到右侧显示图片的宽度值 
+				// position值 =  ( x  / w ) 
+				$(this).css({
+					"background-size" :  (pic_w / w) * _w + "px " + (pic_h / h) * _h + "px",
+					"background-position" : -_w *  (x / w) + "px " + -h *(y / h)  + "px" 
+				});
+			});
+		}
+		$(".btngo").on("click" ,function(){
+			var  rate1 = origin_w / pic_w;
+			var  rate2 = origin_h / pic_h;
+			// console.log(rate1 , rate2)
+			$.get("/cut" , {
+				picname : "<%=picname%>",
+				w : w * rate1,
+				h : h * rate2,
+				x : x * rate1,
+				y : y * rate2
+			},function(data){
+				window.open("/" , "_top");
+			});
+		});		
+	})();
+
+	// 异步上传文件可以用jquery-file-upload
+</script>
+ 

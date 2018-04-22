@@ -1,0 +1,27 @@
+{
+  "name": "project_qasystem",
+  "version": "1.0.0",
+  "discription": "社区问答平台",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test  specified\" && exit 1"
+  },
+  "keywords": [
+    "牛逼",
+    "love"
+  ],
+  "author": "willslience",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^2.5.8",
+    "express": "^4.16.3",
+    "express-session": "^1.15.6",
+    "formidable": "^1.2.1",
+    "gm": "^1.23.1",
+    "mongodb": "^3.0.5",
+    "mongoose": "^5.0.11"
+  },
+  "devDependencies": {
+    "grunt-contrib-concat": "^1.0.1"
+  }
+}
